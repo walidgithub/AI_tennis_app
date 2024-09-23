@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/utils/constant/app_constants.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
 
+import '../../../../core/di/di.dart';
+import '../../../../core/preferences/app_pref.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/constant/app_assets.dart';
 import '../../../../core/utils/constant/app_strings.dart';
@@ -10,8 +14,46 @@ import '../../../../core/utils/constant/app_typography.dart';
 import '../../../../core/utils/dialogs/back_dialog.dart';
 import '../../../../core/utils/ui_components/custom_animation.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final AppPreferences _appPreferences = sl<AppPreferences>();
+  Timer? _timer;
+  bool loggedIn = false;
+
+  _startDelay() {
+    _timer = Timer(const Duration(microseconds: 100), _goNext);
+  }
+
+  _goNext() async {
+    Navigator.pushReplacementNamed(context, Routes.mapRoute);
+  }
+
+  checkLogin() async {
+    await _appPreferences.isUserLoggedIn().then((isUserLoggedIn) => {
+      if (isUserLoggedIn) {loggedIn = true} else {loggedIn = false}
+    });
+    if (loggedIn){
+      _startDelay();
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLogin();
+  }
 
   @override
   Widget build(BuildContext context) {

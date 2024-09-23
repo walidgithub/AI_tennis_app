@@ -6,7 +6,6 @@ class FirebaseErrorHandler implements Exception {
   late FirebaseFailure failure;
 
   FirebaseErrorHandler.handle(dynamic error) {
-    print(error);
     if (error is FirebaseAuthException) {
       failure = _handleError(error);
     } else if (error == "NoInternet") {
@@ -28,7 +27,6 @@ class FirebaseErrorHandler implements Exception {
 }
 
 FirebaseFailure _handleError(FirebaseAuthException error) {
-  print(error.code);
   switch (error.code) {
     case "invalid-credential":
       return DataSource.invalidCredential.getFailure();

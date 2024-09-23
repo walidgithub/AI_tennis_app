@@ -5,6 +5,7 @@ import 'package:weather_app/core/utils/dialogs/error_dialog.dart';
 import 'package:weather_app/features/auth/domain/entities/user_model.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../../core/di/di.dart';
+import '../../../../core/functions/check_valid_email.dart';
 import '../../../../core/preferences/app_pref.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/constant/app_assets.dart';
@@ -56,8 +57,7 @@ class _SignInViewState extends State<SignInView> {
                         showLoading();
                       } else if (state.authState == RequestState.done) {
                         hideLoading();
-                        print("doneeeeeee");
-                        saveUserLoggedIn();
+                        _appPreferences.setUserLoggedIn();
                         Navigator.pushReplacementNamed(context, Routes.mapRoute);
                       } else if (state.authState == RequestState.error) {
                         hideLoading();
@@ -158,16 +158,5 @@ class _SignInViewState extends State<SignInView> {
               )),
         ),
       );
-  }
-
-  bool validateEmail(String value) {
-    if (value.isEmpty) {
-      return false;
-    } else {
-      final emailRegex = RegExp(
-        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
-      );
-      return emailRegex.hasMatch(value);
-    }
   }
 }

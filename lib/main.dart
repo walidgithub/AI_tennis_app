@@ -4,13 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/di/di.dart';
-import 'core/preferences/app_pref.dart';
 import 'core/router/app_router.dart';
 import 'core/utils/constant/app_constants.dart';
 import 'core/utils/constant/app_strings.dart';
 import 'core/utils/style/app_colors.dart';
 import 'core/utils/style/app_theme.dart';
-import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,28 +26,28 @@ void main() async {
   runApp(const MyApp());
 
   ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
-    body: SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            children: [
-              const Text(
-                AppStrings.defaultError,
-                style: TextStyle(color: AppColors.cPrimary),
+        body: SafeArea(
+          child: Scaffold(
+            body: Center(
+              child: Column(
+                children: [
+                  const Text(
+                    AppStrings.defaultError,
+                    style: TextStyle(color: AppColors.cPrimary),
+                  ),
+                  SizedBox(
+                    height: AppConstants.heightBetweenElements,
+                  ),
+                  Text(
+                    details.exceptionAsString(),
+                    style: const TextStyle(color: AppColors.cPrimary),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: AppConstants.heightBetweenElements,
-              ),
-              Text(
-                details.exceptionAsString(),
-                style: const TextStyle(color: AppColors.cPrimary),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
 class MyApp extends StatefulWidget {
@@ -60,23 +58,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AppPreferences _appPreferences = sl<AppPreferences>();
 
-  bool loggedIn = false;
-  goNext() {
-    _appPreferences.isUserLoggedIn().then((isUserLoggedIn) => {
-      if (isUserLoggedIn)
-        {loggedIn = true}
-      else
-        {loggedIn = false}
-    });
-  }
-
-  @override
-  void initState() {
-    goNext();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -89,7 +71,7 @@ class _MyAppState extends State<MyApp> {
               title: AppStrings.appName,
               builder: EasyLoading.init(),
               onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute: loggedIn ? Routes.mapRoute : Routes.homeRoute,
+              initialRoute: Routes.homeRoute,
               theme: AppTheme.lightTheme);
         });
   }

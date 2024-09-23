@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/di/di.dart';
+import '../../../../core/functions/check_valid_email.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/constant/app_assets.dart';
 import '../../../../core/utils/constant/app_constants.dart';
@@ -164,25 +165,5 @@ class _SignUpViewState extends State<SignUpView> {
           ),
         ),
       );
-  }
-
-  bool validateName(String value) {
-    if (value.isEmpty) {
-      return false;
-    } else {
-      final nameRegex = RegExp(r'^[a-zA-Z]+$');
-      return nameRegex.hasMatch(value);
-    }
-  }
-
-  bool validateEmail(String value) {
-    if (value.isEmpty) {
-      return false;
-    } else {
-      final emailRegex = RegExp(
-        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
-      );
-      return emailRegex.hasMatch(value);
-    }
   }
 }
