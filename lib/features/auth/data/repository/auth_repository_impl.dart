@@ -19,7 +19,7 @@ class AuthRepository extends FirebaseRepository {
           final result = await _authDataSource.login(userModel);
           return Right(result);
         } else {
-          return Left(FirebaseErrorHandler.handle("network error").failure);
+          return Left(FirebaseErrorHandler.handle("NoInternet").failure);
         }
       } catch (error) {
         return Left(FirebaseErrorHandler.handle(error).failure);
@@ -33,7 +33,7 @@ class AuthRepository extends FirebaseRepository {
         final result = await _authDataSource.register(userModel);
         return Right(result);
       } else {
-        return Left(FirebaseErrorHandler.handle("network error").failure);
+        return Left(FirebaseErrorHandler.handle("NoInternet").failure);
       }
     } catch (error) {
       return Left(FirebaseErrorHandler.handle(error).failure);

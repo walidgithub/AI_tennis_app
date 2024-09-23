@@ -1,14 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/core/firebase/firebase_manager.dart';
 import 'package:weather_app/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:weather_app/features/auth/domain/usecases/login_usecase.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
-
 import '../../core/preferences/app_pref.dart';
 import '../../features/auth/data/data_source/firebase_data_source/auth_datasource.dart';
-import '../../features/auth/domain/base_usecase/firebase_base_usecase.dart';
 import '../../features/auth/domain/repository/firebase_repository.dart';
 import '../../features/auth/domain/usecases/register_usecase.dart';
 import '../network/dio_manager.dart';
@@ -27,9 +24,6 @@ class ServiceLocator {
 
     // Dio manager
     sl.registerLazySingleton(() => DioManager());
-
-    // Firebase manager
-    // sl.registerLazySingleton(() => FirebaseManager());
 
     // Network Info
     sl.registerLazySingleton<NetworkInfo>(

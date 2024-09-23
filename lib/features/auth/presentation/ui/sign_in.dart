@@ -5,6 +5,7 @@ import 'package:weather_app/core/utils/dialogs/error_dialog.dart';
 import 'package:weather_app/features/auth/domain/entities/user_model.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../../core/di/di.dart';
+import '../../../../core/preferences/app_pref.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/constant/app_assets.dart';
 import '../../../../core/utils/constant/app_constants.dart';
@@ -27,10 +28,15 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  final AppPreferences _appPreferences = sl<AppPreferences>();
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool isEmailCorrect = false;
+
+  Future<void> saveUserLoggedIn() async {
+    await _appPreferences.setUserLoggedIn();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +56,8 @@ class _SignInViewState extends State<SignInView> {
                         showLoading();
                       } else if (state.authState == RequestState.done) {
                         hideLoading();
+                        print("doneeeeeee");
+                        saveUserLoggedIn();
                         Navigator.pushReplacementNamed(context, Routes.mapRoute);
                       } else if (state.authState == RequestState.error) {
                         hideLoading();

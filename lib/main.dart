@@ -6,8 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/di/di.dart';
 import 'core/preferences/app_pref.dart';
 import 'core/router/app_router.dart';
+import 'core/utils/constant/app_constants.dart';
 import 'core/utils/constant/app_strings.dart';
+import 'core/utils/style/app_colors.dart';
 import 'core/utils/style/app_theme.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,31 +24,32 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  // runApp(DevicePreview(builder: (context) => const MyApp()));
   runApp(const MyApp());
 
-  // ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
-  //   body: SafeArea(
-  //     child: Scaffold(
-  //       body: Center(
-  //         child: Column(
-  //           children: [
-  //             const Text(
-  //               AppStrings.someThingWentWrong,
-  //               style: TextStyle(color: AppColors.cPrimary),
-  //             ),
-  //             SizedBox(
-  //               height: AppConstants.heightBetweenElements,
-  //             ),
-  //             Text(
-  //               details.exceptionAsString(),
-  //               style: const TextStyle(color: AppColors.cPrimary),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   ),
-  // );
+  ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
+    body: SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              const Text(
+                AppStrings.defaultError,
+                style: TextStyle(color: AppColors.cPrimary),
+              ),
+              SizedBox(
+                height: AppConstants.heightBetweenElements,
+              ),
+              Text(
+                details.exceptionAsString(),
+                style: const TextStyle(color: AppColors.cPrimary),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -85,8 +89,7 @@ class _MyAppState extends State<MyApp> {
               title: AppStrings.appName,
               builder: EasyLoading.init(),
               onGenerateRoute: RouteGenerator.getRoute,
-              // initialRoute: loggedIn ? Routes.homeRoute : Routes.signInRoute,
-              initialRoute: Routes.homeRoute,
+              initialRoute: loggedIn ? Routes.mapRoute : Routes.homeRoute,
               theme: AppTheme.lightTheme);
         });
   }

@@ -15,7 +15,7 @@ Future<bool> onError(BuildContext context, String errorText) async {
             Center(
               child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(false);
                   },
                   child: Text(AppStrings.close,style: AppTypography.kLight14)),
             ),

@@ -7,7 +7,6 @@ class AppStrings {
   static const String warning = 'Warning';
   static const String error = 'Error';
   static const String closeApp = 'Do you want to close the app?';
-  static const String someThingWentWrong = "Something went error";
 
   static const String signIn = "Sign In";
   static const String signUp = "Sign Up";
@@ -37,10 +36,11 @@ class AppStrings {
   static const String timeoutError = "timeout_error";
   static const String defaultError = "Something went error";
   static const String cacheError = "cache_error";
-  static const String noInternetError = "no_internet_error";
+  static const String noInternetError = "There is no internet";
 
   //firebase error handler
   static const String tooManyRequests = "Too many Requests";
-  static const String invalidCredential = "invalid-credential";
+  static const String invalidCredential = "Invalid credential";
   static const String emailAlreadyInUse = "Email is already in use";
+  static const String networkRequestFailed = "Network request failed";
 }
