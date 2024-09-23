@@ -27,7 +27,7 @@ class FirebaseErrorHandler implements Exception {
 }
 
 FirebaseFailure _handleError(FirebaseAuthException error) {
-  switch (error.code) {
+  switch (error.code.toString()) {
     case "invalid-credential":
       return DataSource.invalidCredential.getFailure();
     case "too-many-requests":

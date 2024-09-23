@@ -141,7 +141,7 @@ class _SignUpViewState extends State<SignUpView> {
                               children: [
                                 Text(AppStrings.alreadyUser,
                                     style: AppTypography.kLight14.copyWith(
-                                      color: AppColors.cLine,
+                                      color: AppColors.cPrimary,
                                     )),
                                 SizedBox(
                                   width: AppConstants.heightBetweenElements,

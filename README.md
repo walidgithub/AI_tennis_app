@@ -1,6 +1,12 @@
 # weather_app
 
-A new Flutter project.
+AI tennis app.
+
+[![Watch the video](https://img.youtube.com/vi/lpmAeItE4jc/hqdefault.jpg)](https://www.youtube.com/embed/lpmAeItE4jc)
+
+[<img src="https://img.youtube.com/vi/lpmAeItE4jc/hqdefault.jpg" width="600" height="300"
+/>](https://www.youtube.com/embed/lpmAeItE4jc)
+
 
 ## Getting Started
 
