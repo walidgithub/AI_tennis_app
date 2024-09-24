@@ -1,0 +1,32 @@
+Components
+1. Core
+Location: /lib/core
+Description: Contains:
+             - shared functionality across the application
+             - dependency injection
+             - network manager
+             - preferences
+             - routing
+             - app style
+             - app constants
+             - ui components
+             - error handling
+             - base use cases
+
+2. Features
+Location: /lib/features
+Description:
+
+* Feature: Auth
+
+Data layer:
+Location: /lib/features/user/data
+Description: Contains data models and repository implementations.
+
+Domain layer:
+Location: /lib/features/user/domain
+Description: Contains entities, repository interfaces, and use cases.
+
+Presentation layer:
+Location: /lib/features/user/presentation
+Description: Contains UI-related components, including BLoC (Business Logic Component), pages, and widgets.
