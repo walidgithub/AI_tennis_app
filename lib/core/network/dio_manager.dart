@@ -20,9 +20,9 @@ class DioManager {
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
         headers: <String, String> {},
-        sendTimeout: 30000,
-        connectTimeout: 20000,
-        receiveTimeout: 60000,
+        sendTimeout: const Duration(milliseconds: 30000),
+        connectTimeout: const Duration(milliseconds: 20000),
+        receiveTimeout: const Duration(milliseconds: 20000),
       ),
     );
     if (!kReleaseMode) {

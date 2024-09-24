@@ -23,6 +23,12 @@ class AppStrings {
   static const String passwordConfirmError = "Password confirm not like password";
   static const String validPass = "Password must be at least one capital character, one small character and one digit";
 
+  static const String destination = "Destination";
+  static const String hello = "Hello";
+  static const String search = "Search";
+  static const String profile = "Profile";
+  static const String logout = "Logout";
+
   static const String success = "success";
   // error handler
   static const String badRequestError = "bad_request_error";
@@ -35,6 +41,7 @@ class AppStrings {
   static const String unknownError = "unknown_error";
   static const String timeoutError = "timeout_error";
   static const String defaultError = "Something went error";
+  static const String badCertificate = "Bad certificate";
   static const String cacheError = "cache_error";
   static const String noInternetError = "There is no internet";
 

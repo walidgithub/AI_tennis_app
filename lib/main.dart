@@ -25,29 +25,29 @@ void main() async {
   // runApp(DevicePreview(builder: (context) => const MyApp()));
   runApp(const MyApp());
 
-  ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
-        body: SafeArea(
-          child: Scaffold(
-            body: Center(
-              child: Column(
-                children: [
-                  const Text(
-                    AppStrings.defaultError,
-                    style: TextStyle(color: AppColors.cPrimary),
-                  ),
-                  SizedBox(
-                    height: AppConstants.heightBetweenElements,
-                  ),
-                  Text(
-                    details.exceptionAsString(),
-                    style: const TextStyle(color: AppColors.cPrimary),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
+  // ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
+  //       body: SafeArea(
+  //         child: Scaffold(
+  //           body: Center(
+  //             child: Column(
+  //               children: [
+  //                 const Text(
+  //                   AppStrings.defaultError,
+  //                   style: TextStyle(color: AppColors.cPrimary),
+  //                 ),
+  //                 SizedBox(
+  //                   height: AppConstants.heightBetweenElements,
+  //                 ),
+  //                 Text(
+  //                   details.exceptionAsString(),
+  //                   style: const TextStyle(color: AppColors.cPrimary),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     );
 }
 
 class MyApp extends StatefulWidget {

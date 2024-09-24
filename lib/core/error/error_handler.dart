@@ -14,15 +14,15 @@ class ErrorHandler implements Exception {
   }
 }
 
-Failure _handleError(DioError error) {
+Failure _handleError(DioException error) {
   switch (error.type) {
-    case DioErrorType.connectTimeout:
+    case DioExceptionType.connectionTimeout:
       return DataSource.CONNECT_TIMEOUT.getFailure();
-    case DioErrorType.sendTimeout:
+    case DioExceptionType.sendTimeout:
       return DataSource.SEND_TIMEOUT.getFailure();
-    case DioErrorType.receiveTimeout:
+    case DioExceptionType.receiveTimeout:
       return DataSource.RECIEVE_TIMEOUT.getFailure();
-    case DioErrorType.response:
+    case DioExceptionType.badResponse:
       if (error.response != null &&
           error.response?.statusCode != null &&
           error.response?.statusMessage != null) {
@@ -31,9 +31,13 @@ Failure _handleError(DioError error) {
       } else {
         return DataSource.DEFAULT.getFailure();
       }
-    case DioErrorType.cancel:
+    case DioExceptionType.cancel:
       return DataSource.CANCEL.getFailure();
-    case DioErrorType.other:
+    case DioExceptionType.badCertificate:
+      return DataSource.BAD_CERTIFICATE.getFailure();
+    case DioExceptionType.connectionError:
+      return DataSource.NO_INTERNET_CONNECTION.getFailure();
+    case DioExceptionType.unknown:
       return DataSource.DEFAULT.getFailure();
   }
 }
@@ -52,6 +56,7 @@ enum DataSource {
   SEND_TIMEOUT,
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
+  BAD_CERTIFICATE,
   DEFAULT
 }
 
@@ -94,6 +99,8 @@ extension DataSourceExtension on DataSource {
         return Failure(ResponseCode.NO_INTERNET_CONNECTION,
             ResponseMessage.NO_INTERNET_CONNECTION);
       case DataSource.DEFAULT:
+        return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
+      case DataSource.BAD_CERTIFICATE:
         return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
     }
   }
@@ -140,5 +147,6 @@ class ResponseMessage {
   static const String SEND_TIMEOUT = AppStrings.timeoutError;
   static const String CACHE_ERROR = AppStrings.cacheError;
   static const String NO_INTERNET_CONNECTION = AppStrings.noInternetError;
+  static const String BAD_CERTIFICATE = AppStrings.badCertificate;
   static const String DEFAULT = AppStrings.defaultError;
 }
