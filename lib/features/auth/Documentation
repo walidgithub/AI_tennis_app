@@ -10,7 +10,7 @@ Description: Contains:
              - app style
              - app constants
              - ui components
-             - error handling
+             - error handling (firebase and dio)
              - base use cases
 
 2. Features
@@ -21,7 +21,7 @@ Description:
 
 Data layer:
 Location: /lib/features/user/data
-Description: Contains data models and repository implementations.
+Description: Contains firebase data source and repository implementations.
 
 Domain layer:
 Location: /lib/features/user/domain
