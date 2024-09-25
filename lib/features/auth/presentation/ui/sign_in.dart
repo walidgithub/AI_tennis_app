@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/utils/dialogs/error_dialog.dart';
-import 'package:weather_app/features/auth/domain/entities/user_model.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../../core/di/di.dart';
 import '../../../../core/functions/check_valid_email.dart';
@@ -19,6 +18,7 @@ import '../../../../core/utils/ui_components/custom_animation.dart';
 import '../../../../core/utils/ui_components/custom_text_button.dart';
 import '../../../../core/utils/ui_components/loading_dialog.dart';
 import '../../../../core/utils/ui_components/primary_button.dart';
+import '../../domain/entities/credential_model.dart';
 import 'components/auth_field.dart';
 
 class SignInView extends StatefulWidget {
@@ -123,8 +123,8 @@ class _SignInViewState extends State<SignInView> {
                                   onTap: () async {
                                     if (_formKey.currentState!.validate()) {
                                       await Future.delayed(const Duration(seconds: 3));
-                                      UserModel userModel = UserModel(email: _emailController.text.trim(),password: _passwordController.text.trim());
-                                      BlocProvider.of<AuthBloc>(context).add(LoginEvent(userModel));
+                                      CredentialModel credentialModel = CredentialModel(email: _emailController.text.trim(),password: _passwordController.text.trim());
+                                      BlocProvider.of<AuthBloc>(context).add(LoginEvent(credentialModel));
                                     }
                                   },
                                   text: AppStrings.signIn),

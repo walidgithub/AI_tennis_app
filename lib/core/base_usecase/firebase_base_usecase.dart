@@ -6,8 +6,8 @@ abstract class FirebaseBaseUsecase<T, Parameters> {
   Future<Either<FirebaseFailure, T>> call(Parameters parameters);
 }
 
-class NoParameters extends Equatable {
-  const NoParameters();
+class FirebaseNoParameters extends Equatable {
+  const FirebaseNoParameters();
   @override
   List<Object?> get props => [];
 }

@@ -14,9 +14,8 @@ class AuthState extends Equatable {
     String? authMessage,
   }) {
     return AuthState(
-      authState: authState ?? this.authState,
-      authMessage: authMessage ?? this.authMessage
-    );
+        authState: authState ?? this.authState,
+        authMessage: authMessage ?? this.authMessage);
   }
 
   @override

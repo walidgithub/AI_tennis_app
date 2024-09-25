@@ -16,7 +16,7 @@ import '../../../../core/utils/ui_components/custom_animation.dart';
 import '../../../../core/utils/ui_components/custom_text_button.dart';
 import '../../../../core/utils/ui_components/loading_dialog.dart';
 import '../../../../core/utils/ui_components/primary_button.dart';
-import '../../domain/entities/user_model.dart';
+import '../../domain/entities/credential_model.dart';
 import '../bloc/auth_bloc.dart';
 import 'components/auth_field.dart';
 
@@ -130,8 +130,8 @@ class _SignUpViewState extends State<SignUpView> {
                             PrimaryButton(
                                 onTap: () async {
                                   if (_formKey.currentState!.validate()) {
-                                    UserModel userModel = UserModel(email: _emailController.text.trim(),password: _passwordController.text.trim());
-                                    BlocProvider.of<AuthBloc>(context).add(RegisterEvent(userModel));
+                                    CredentialModel credentialModel = CredentialModel(email: _emailController.text.trim(),password: _passwordController.text.trim());
+                                    BlocProvider.of<AuthBloc>(context).add(RegisterEvent(credentialModel));
                                   }
                                 },
                                 text: AppStrings.signUp),

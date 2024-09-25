@@ -8,17 +8,19 @@ abstract class AuthEvent extends Equatable {
 }
 
 class LoginEvent extends AuthEvent{
-  final UserModel userModel;
+  final CredentialModel credentialModel;
 
-  LoginEvent(this.userModel);
+  LoginEvent(this.credentialModel);
 
-  List<Object> get props => [userModel];
+  List<Object> get props => [credentialModel];
 }
 
 class RegisterEvent extends AuthEvent{
-  final UserModel userModel;
+  final CredentialModel credentialModel;
 
-  RegisterEvent(this.userModel);
+  RegisterEvent(this.credentialModel);
 
-  List<Object> get props => [userModel];
+  List<Object> get props => [credentialModel];
 }
+
+class LogoutEvent extends AuthEvent{}

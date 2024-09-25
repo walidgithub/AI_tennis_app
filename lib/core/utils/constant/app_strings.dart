@@ -29,6 +29,8 @@ class AppStrings {
   static const String profile = "Profile";
   static const String logout = "Logout";
 
+  static const String phoneNumber = "Phone:";
+
   static const String success = "success";
   // error handler
   static const String badRequestError = "bad_request_error";

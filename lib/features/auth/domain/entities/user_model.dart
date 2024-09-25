@@ -1,8 +1,12 @@
 class UserModel {
-  UserModel({
+  const UserModel({
     required this.email,
-    required this.password,
+    required this.phoneNumber,
+    required this.photoURL,
+    required this.displayName
   });
   final String email;
-  final String password;
+  final String phoneNumber;
+  final String photoURL;
+  final String displayName;
 }
