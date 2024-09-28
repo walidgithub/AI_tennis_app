@@ -9,9 +9,8 @@ import '../constant/app_typography.dart';
 import '../style/app_colors.dart';
 
 class BottomBar extends StatefulWidget {
-  Function profile;
   Function logout;
-  BottomBar({Key? key, required this.profile, required this.logout}) : super(key: key);
+  BottomBar({Key? key, required this.logout}) : super(key: key);
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -31,25 +30,6 @@ class _BottomBarState extends State<BottomBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          GestureDetector(
-            onTap: (){
-              widget.profile();
-            },
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  AppAssets.profile,
-                  width: 30.w,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(AppStrings.profile,
-                    style: AppTypography.kLight16
-                        .copyWith(color: AppColors.cSecondary)),
-              ],
-            ),
-          ),
           GestureDetector(
             onTap: (){
               widget.logout();

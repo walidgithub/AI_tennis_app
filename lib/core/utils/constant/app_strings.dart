@@ -30,6 +30,10 @@ class AppStrings {
   static const String logout = "Logout";
 
   static const String phoneNumber = "Phone:";
+  static const String locationNotReady = "Location not ready yet.";
+  static const String humidity = "Humidity";
+  static const String prediction = "Prediction";
+  static const String chanceOfRains = "Chance of rains";
 
   static const String success = "success";
   // error handler

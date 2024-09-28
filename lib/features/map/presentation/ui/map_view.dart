@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
+import 'package:weather_app/core/router/arguments.dart';
 import 'package:weather_app/core/utils/constant/app_constants.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
-import 'package:weather_app/features/auth/domain/entities/user_model.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../../core/di/di.dart';
 import '../../../../core/preferences/app_pref.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../../core/router/arguments.dart';
 import '../../../../core/utils/constant/app_strings.dart';
 import '../../../../core/utils/constant/app_typography.dart';
 import '../../../../core/utils/dialogs/back_dialog.dart';
@@ -31,8 +30,17 @@ class _MapViewState extends State<MapView> {
   TextEditingController destinationController = TextEditingController();
   final AppPreferences _appPreferences = sl<AppPreferences>();
 
-  UserModel userModel = const UserModel(
-  email: "", displayName: "", phoneNumber: "", photoURL: "");
+  String userEmailAddress = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getEmailAddress();
+  }
+
+  void getEmailAddress() async {
+    userEmailAddress = _appPreferences.getUserEmail(userEmail)!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +83,7 @@ class _MapViewState extends State<MapView> {
                                         Text(AppStrings.hello,
                                             style: AppTypography.kBold24.copyWith(
                                                 color: AppColors.cSecondary)),
-                                        Text(userModel.displayName,
+                                        Text(userEmailAddress.toString(),
                                             style: AppTypography.kLight16.copyWith(
                                                 color: AppColors.cSecondary)),
                                       ],
@@ -102,21 +110,39 @@ class _MapViewState extends State<MapView> {
                                           trackMyPosition: true,
                                           onError: (e) => print(e),
                                           onPicked: (pickedData) {
-                                            print(pickedData.latLong.latitude);
-                                            print(pickedData.latLong.longitude);
-                                            print(pickedData.address);
-                                            print(
-                                                pickedData.addressData['country']);
-                                            destinationController.text =
-                                                pickedData.address;
+                                            // print(pickedData.latLong.latitude);
+                                            // print(pickedData.latLong.longitude);
+                                            // print(pickedData.address);
+                                            // print(
+                                            //     pickedData.addressData['country']);
+                                            destinationController.text = "";
+                                            for (var n in pickedData.addressData.entries) {
+                                              if (n.key == 'city' || n.key == 'country') {
+                                                if (destinationController.text == '') {
+                                                  destinationController.text =
+                                                  "${n.value}";
+                                                } else {
+                                                  destinationController.text = "${destinationController.text}, ${n.value}";
+                                                }
+                                              }
+                                            }
                                           },
                                           onChanged: (pickedData) {
-                                            print(pickedData.latLong.latitude);
-                                            print(pickedData.latLong.longitude);
-                                            print(pickedData.address);
-                                            print(pickedData.addressData);
-                                            destinationController.text =
-                                                pickedData.address;
+                                            // print(pickedData.latLong.latitude);
+                                            // print(pickedData.latLong.longitude);
+                                            // print(pickedData.address);
+                                            // print(pickedData.addressData);
+                                            destinationController.text = "";
+                                            for (var n in pickedData.addressData.entries) {
+                                              if (n.key == 'city' || n.key == 'country') {
+                                                if (destinationController.text == '') {
+                                                  destinationController.text =
+                                                  "${n.value}";
+                                                } else {
+                                                  destinationController.text = "${destinationController.text}, ${n.value}";
+                                                }
+                                              }
+                                            }
                                           }),
                                     ),
                                   ],
@@ -125,6 +151,7 @@ class _MapViewState extends State<MapView> {
                                   height: AppConstants.heightBetweenElements,
                                 ),
                                 TextField(
+                                  readOnly: true,
                                     inputFormatters: [
                                       LengthLimitingTextInputFormatter(50),
                                     ],
@@ -143,8 +170,16 @@ class _MapViewState extends State<MapView> {
                                 ),
                                 PrimaryButton(
                                     onTap: () async {
-                                      await Future.delayed(
-                                          const Duration(seconds: 3));
+                                      if (destinationController.text.trim() != "") {
+                                        Navigator.pushNamed(context, Routes.weatherRoute, arguments: LocationArguments(location: destinationController.text.trim()));
+                                      } else {
+                                        final snackBar = SnackBar(
+                                          duration:
+                                          Duration(milliseconds: AppConstants.durationOfSnackBar),
+                                          content: const Text(AppStrings.locationNotReady),
+                                        );
+                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      }
                                     },
                                     text: AppStrings.search),
                               ],
@@ -157,15 +192,6 @@ class _MapViewState extends State<MapView> {
                               child: BottomBar(
                                 logout: () {
                                   BlocProvider.of<AuthBloc>(context).add(LogoutEvent());
-                                },
-                                profile: () {
-                                  Navigator.pushNamed(
-                                      context, Routes.profileRoute,
-                                      arguments: UserModelArguments(
-                                          photoURL: userModel.photoURL,
-                                          phoneNumber: userModel.phoneNumber,
-                                          displayName: userModel.displayName,
-                                          email: userModel.email));
                                 },
                               ))
                         ],
