@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/core/utils/constant/app_assets.dart';
 import 'package:weather_app/core/utils/constant/app_constants.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
-import 'package:weather_app/features/map/presentation/ui/components/days_group_view.dart';
 import '../../../../core/router/arguments.dart';
 import '../../../../core/utils/constant/app_strings.dart';
 import '../../../../core/utils/constant/app_typography.dart';
 import '../../../../core/utils/ui_components/primary_button.dart';
+import 'components/days_group_view.dart';
 
 class WeatherView extends StatefulWidget {
   LocationArguments arguments;
