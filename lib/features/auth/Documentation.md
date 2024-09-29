@@ -1,42 +1,23 @@
-# Project Components Documentation
+# Feature Documentation
 
-## 1. Core
-
-**Location**: `/lib/core`
-
-**Description**: The core module contains shared functionality across the application, including:
-- Dependency injection
-- Network management
-- User preferences
-- Routing
-- App styling
-- Application constants
-- UI components
-- Error handling (using Firebase and Dio)
-- Base use cases
-
----
-
-## 2. Features
+## Auth Features
 
 **Location**: `/lib/features`
 
-### Feature: Auth
-
 #### Data Layer
 
-**Location**: `/lib/features/user/data`  
+**Location**: `/lib/features/auth/data`  
 **Description**: This layer includes the Firebase data source and repository implementations.
 
 #### Domain Layer
 
-**Location**: `/lib/features/user/domain`  
+**Location**: `/lib/features/auth/domain`  
 **Description**: This layer comprises entities, repository interfaces, and use cases.
 
 #### Presentation Layer
 
-**Location**: `/lib/features/user/presentation`  
+**Location**: `/lib/features/auth/presentation`  
 **Description**: This layer contains UI-related components, including:
 - BLoC (Business Logic Component)
-- Pages
-- Widgets
+- Pages (HomePage, SignIn And SignUp)
+- Some related components
