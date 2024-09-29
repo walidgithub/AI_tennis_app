@@ -16,3 +16,9 @@
 2. **Set Your Location**: Navigate to the location page to define your preferred location.
 3. **View Weather Forecast**: Access detailed weather information for the next four days.
 4. **Plan Your Outings**: Use the weather predictions to decide when to go out.
+
+
+## Contacts
+1. **LinkedIn**: www.linkedin.com/in/walidbarakat1985
+2. **g-mail**: walidmohamedbarkat@gmail.com
+
