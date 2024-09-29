@@ -7,7 +7,7 @@
 #### 1- Login and Register
 [![Watch the video](https://img.youtube.com/vi/lpmAeItE4jc/hqdefault.jpg)](https://www.youtube.com/embed/lpmAeItE4jc)
 
-#### 2- Define location and get weather data
+#### 2- Defining location and getting weather data
 [![Watch the video](https://img.youtube.com/vi/jv2Igw4Jp8I/hqdefault.jpg)](https://www.youtube.com/embed/jv2Igw4Jp8I)
 
 ## Getting Started
