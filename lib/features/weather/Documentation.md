@@ -1,6 +1,6 @@
 # Feature Documentation
 
-## Weather Features
+## Weather Feature
 
 **Location**: `/lib/features`
 

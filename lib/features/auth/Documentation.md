@@ -1,6 +1,6 @@
 # Feature Documentation
 
-## Auth Features
+## Auth Feature
 
 **Location**: `/lib/features`
 
