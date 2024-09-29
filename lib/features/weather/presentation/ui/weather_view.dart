@@ -1,18 +1,29 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/core/utils/constant/app_assets.dart';
 import 'package:weather_app/core/utils/constant/app_constants.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
+import 'package:weather_app/features/weather/data/models/forecast_day_model.dart';
+import '../../../../core/di/di.dart';
+import '../../../../core/functions/get_weather_background_image.dart';
+import '../../../../core/functions/get_weather_image.dart';
+import '../../../../core/preferences/app_pref.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/router/arguments.dart';
 import '../../../../core/utils/constant/app_strings.dart';
 import '../../../../core/utils/constant/app_typography.dart';
+import '../../../../core/utils/dialogs/error_dialog.dart';
+import '../../../../core/utils/enums/RequestState.dart';
+import '../../../../core/utils/ui_components/loading_dialog.dart';
 import '../../../../core/utils/ui_components/primary_button.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
 import 'components/days_group_view.dart';
 
 class WeatherView extends StatefulWidget {
-  LocationArguments arguments;
+  WeatherViewArguments arguments;
   WeatherView({super.key, required this.arguments});
 
   @override
@@ -20,6 +31,7 @@ class WeatherView extends StatefulWidget {
 }
 
 class _WeatherViewState extends State<WeatherView> {
+  final AppPreferences _appPreferences = sl<AppPreferences>();
   TimeOfDay _timeOfDay = TimeOfDay.now();
   DateTime _dateOfDay = DateTime.now();
   DateTime currentDate = DateTime.now();
@@ -27,45 +39,23 @@ class _WeatherViewState extends State<WeatherView> {
   int selectedIndex = 0;
   String dayName = "";
   String image = "";
-  String temperature = "";
+  double temperature = 0.0;
 
-  List<DaysGroupModel> daysGroup = [
-    DaysGroupModel(
-        dayImage: AppAssets.cloudyDay,
-        dayTemp: "32 c",
-        weather: "cloudy",
-        humidity: "50%",
-    rains: '45%'),
-    DaysGroupModel(
-        dayImage: AppAssets.sunnyDay,
-        dayTemp: "22 c",
-        weather: "sunny",
-        humidity: "40%",
-        rains: '25%'),
-    DaysGroupModel(
-        dayImage: AppAssets.foggyDay,
-        dayTemp: "42 c",
-        weather: "foggy",
-        humidity: "50%",
-        rains: '15%'),
-    DaysGroupModel(
-        dayImage: AppAssets.rainyDay,
-        dayTemp: "35 c",
-        weather: "rainy",
-        humidity: "70%",
-        rains: '20%'),
-  ];
+  List<ForecastDayModel> forecastDayModelList = [];
 
   @override
   void initState() {
     super.initState();
     _getTimeAndDate();
-    nextThreeDays = List.generate(4, (index) {
+    nextThreeDays = List.generate(3, (index) {
       return currentDate.add(Duration(days: index + 1));
     });
+    nextThreeDays!.add(currentDate);
+    nextThreeDays!.sort();
+    forecastDayModelList = widget.arguments.forecastDayModelList;
     dayName = DateFormat('EEE d').format(nextThreeDays![0]);
-    image = daysGroup[0].dayImage;
-    temperature = daysGroup[0].dayTemp;
+    image = getImage(forecastDayModelList[0].day.condition.text);
+    temperature = forecastDayModelList[0].day.avgtempC;
   }
 
   void _getTimeAndDate() {
@@ -81,174 +71,231 @@ class _WeatherViewState extends State<WeatherView> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: Container(
-        height: MediaQuery.sizeOf(context).height,
-        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AppAssets.cloudy), fit: BoxFit.cover)),
-        child: Column(
-          children: [
-            Column(
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.sizeOf(context).height,
+            padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(getBackground(widget
+                        .arguments
+                        .forecastDayModelList[selectedIndex]
+                        .day
+                        .condition
+                        .text)),
+                    fit: BoxFit.cover)),
+            child: Column(
               children: [
-                Center(
-                    child: Text(
-                  _timeOfDay.format(context).toString(),
-                  style: AppTypography.kBold36,
-                )),
-                SizedBox(
-                  height: AppConstants.heightBetweenElements,
+                Column(
+                  children: [
+                    Center(
+                        child: Text(
+                      _timeOfDay.format(context).toString(),
+                      style: AppTypography.kBold36,
+                    )),
+                    SizedBox(
+                      height: AppConstants.heightBetweenElements,
+                    ),
+                    Center(
+                        child: Text(
+                      DateFormat('EEEE | d MMM').format(_dateOfDay),
+                      style: AppTypography.kBold24
+                          .copyWith(color: AppColors.cTitle),
+                    ))
+                  ],
                 ),
-                Center(
-                    child: Text(
-                  DateFormat('EEEE | d MMM').format(_dateOfDay),
-                  style:
-                      AppTypography.kBold24.copyWith(color: AppColors.cTitle),
-                ))
-              ],
-            ),
-            SizedBox(
-              height: AppConstants.moreHeightBetweenElements,
-            ),
-            Container(
-              width: MediaQuery.sizeOf(context).width * 0.9,
-              height: MediaQuery.sizeOf(context).height * 0.2,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(AppConstants.radius),
-              ),
-              child: Center(
-                child: ListView.separated(
-                    itemCount: nextThreeDays!.length,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        width: 25.w,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      return DaysGroupView(
-                          dayName:
-                              DateFormat('EEE d').format(nextThreeDays![index]),
-                          image: daysGroup[index].dayImage,
-                          temperature: daysGroup[index].dayTemp,
-                      getWeather: (String selectedTemperature, String selectedImage, String selectedDayName) {
-                            setState(() {
-                              dayName = selectedDayName;
-                              image = selectedImage;
-                              temperature = selectedTemperature;
-                              selectedIndex = index;
-                            });
-                      });
-                    }),
-              ),
-            ),
-            SizedBox(
-              height: AppConstants.moreHeightBetweenElements,
-            ),
-            Container(
-              width: MediaQuery.sizeOf(context).width * 0.9,
-              height: MediaQuery.sizeOf(context).height * 0.4,
-              padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.h),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(AppConstants.radius),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.arguments.location,
-                    style:
-                        AppTypography.kBold24.copyWith(color: AppColors.cWhite),
+                SizedBox(
+                  height: AppConstants.moreHeightBetweenElements,
+                ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  height: MediaQuery.sizeOf(context).height * 0.2,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(AppConstants.radius),
                   ),
-                  SizedBox(
-                    height: 10.h,
+                  child: Center(
+                    child: ListView.separated(
+                        itemCount: nextThreeDays!.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            width: 15.w,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          return DaysGroupView(
+                              dayName: DateFormat('EEE d')
+                                  .format(nextThreeDays![index]),
+                              image: getImage(forecastDayModelList[index]
+                                  .day
+                                  .condition
+                                  .text),
+                              temperature:
+                                  forecastDayModelList[index].day.avgtempC,
+                              getWeather: (double selectedTemperature,
+                                  String selectedImage,
+                                  String selectedDayName) {
+                                setState(() {
+                                  dayName = selectedDayName;
+                                  image = selectedImage;
+                                  temperature = selectedTemperature;
+                                  selectedIndex = index;
+                                });
+                              });
+                        }),
                   ),
-                  Text(
-                    dayName,
-                    style:
-                    AppTypography.kBold14.copyWith(color: AppColors.cWhite),
+                ),
+                SizedBox(
+                  height: AppConstants.moreHeightBetweenElements,
+                ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  height: MediaQuery.sizeOf(context).height * 0.4,
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.h),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(AppConstants.radius),
                   ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.8,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.arguments.location,
+                        style: AppTypography.kBold24
+                            .copyWith(color: AppColors.cWhite),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(
+                        dayName,
+                        style: AppTypography.kBold14
+                            .copyWith(color: AppColors.cWhite),
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * 0.8,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              temperature,
-                              style: AppTypography.kBold36
-                                  .copyWith(color: AppColors.cWhite),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${temperature.toString()}° C',
+                                  style: AppTypography.kBold36
+                                      .copyWith(color: AppColors.cWhite),
+                                ),
+                                SizedBox(
+                                  height: AppConstants.heightBetweenElements,
+                                ),
+                                Text(
+                                  forecastDayModelList[selectedIndex]
+                                      .day
+                                      .condition
+                                      .text,
+                                  style: AppTypography.kBold14
+                                      .copyWith(color: AppColors.cWhite),
+                                ),
+                                SizedBox(
+                                  height: AppConstants.heightBetweenElements,
+                                ),
+                                Text(
+                                  '${AppStrings.chanceOfRains} ${forecastDayModelList[selectedIndex].day.dailyChanceOfRain.toString()}%',
+                                  style: AppTypography.kBold14
+                                      .copyWith(color: AppColors.cWhite),
+                                ),
+                                SizedBox(
+                                  height: AppConstants.heightBetweenElements,
+                                ),
+                                Text(
+                                  '${AppStrings.humidity} ${forecastDayModelList[selectedIndex].day.avghumidity.toString()}%',
+                                  style: AppTypography.kBold14
+                                      .copyWith(color: AppColors.cWhite),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: AppConstants.heightBetweenElements,
-                            ),
-                            Text(
-                              daysGroup[selectedIndex].weather,
-                              style: AppTypography.kBold14
-                                  .copyWith(color: AppColors.cWhite),
-                            ),
-                            SizedBox(
-                              height: AppConstants.heightBetweenElements,
-                            ),
-                            Text(
-                              '${AppStrings.chanceOfRains} ${daysGroup[selectedIndex].rains}',
-                              style: AppTypography.kBold14
-                                  .copyWith(color: AppColors.cWhite),
-                            ),
-                            SizedBox(
-                              height: AppConstants.heightBetweenElements,
-                            ),
-                            Text(
-                              '${AppStrings.humidity} ${daysGroup[selectedIndex].humidity}',
-                              style: AppTypography.kBold14
-                                  .copyWith(color: AppColors.cWhite),
+                            Image.asset(
+                              image,
+                              width: 100.h,
                             ),
                           ],
                         ),
-                        Image.asset(
-                          image,
-                          width: 100.h,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: AppConstants.heightBetweenElements,
+                ),
+                PrimaryButton(onTap: () async {}, text: AppStrings.prediction),
+              ],
             ),
-            SizedBox(
-              height: AppConstants.heightBetweenElements,
-            ),
-            PrimaryButton(
-                onTap: () async {
-
-                },
-                text: AppStrings.prediction),
-          ],
-        ),
+          ),
+          Positioned(
+              top: 20.h,
+              left: 20.w,
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                      width: 40.w,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius:
+                        BorderRadius.circular(AppConstants.radius),
+                      ),
+                      child: Icon(Icons.arrow_back,
+                          size: 30.w, color: AppColors.cWhite)))),
+          Positioned(
+              top: 20.h,
+              right: 20.w,
+              child: BlocProvider(
+                create: (context) => sl<AuthBloc>(),
+                child: BlocConsumer<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(LogoutEvent());
+                        },
+                        child: Container(
+                            width: 40.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.3),
+                              borderRadius:
+                                  BorderRadius.circular(AppConstants.radius),
+                            ),
+                            child: Icon(Icons.logout,
+                                size: 30.w, color: AppColors.cWhite)));
+                  },
+                  listener: (context, state) {
+                    if (state.authState == RequestState.loading) {
+                      showLoading();
+                    } else if (state.authState == RequestState.done) {
+                      hideLoading();
+                      _appPreferences.logout();
+                      Navigator.pushReplacementNamed(
+                          context, Routes.signInRoute);
+                    } else if (state.authState == RequestState.error) {
+                      hideLoading();
+                      onError(context, state.authMessage);
+                    }
+                  },
+                ),
+              )),
+        ],
       ),
     ));
   }
-}
-
-class DaysGroupModel {
-  String dayImage;
-  String dayTemp;
-  String weather;
-  String humidity;
-  String rains;
-  DaysGroupModel(
-      {required this.dayImage,
-      required this.dayTemp,
-      required this.weather,
-      required this.humidity,
-      required this.rains});
 }

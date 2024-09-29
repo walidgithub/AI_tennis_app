@@ -6,7 +6,7 @@ import '../../../../../core/utils/constant/app_typography.dart';
 class DaysGroupView extends StatefulWidget {
   String dayName;
   String image;
-  String temperature;
+  double temperature;
   Function getWeather;
   DaysGroupView({super.key, required this.dayName, required this.image, required this.temperature, required this.getWeather});
 
@@ -32,7 +32,7 @@ class _DaysGroupViewState extends State<DaysGroupView> {
           Image.asset(widget.image, width: 30.h,),
           Center(
               child: Text(
-                widget.temperature,
+                '${widget.temperature.toString()}° C',
                 style: AppTypography.kBold18.copyWith(color: AppColors.cWhite),
               )),
         ],

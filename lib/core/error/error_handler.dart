@@ -8,6 +8,8 @@ class ErrorHandler implements Exception {
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
       failure = _handleError(error);
+    } else if (error == "NoInternet") {
+      failure = DataSource.NO_INTERNET_CONNECTION.getFailure();
     } else {
       failure = DataSource.DEFAULT.getFailure();
     }

@@ -26,7 +26,7 @@ class RouteGenerator {
       case Routes.mapRoute:
         return MaterialPageRoute(builder: (_) => const MapView());
       case Routes.weatherRoute:
-        return MaterialPageRoute(builder: (_) => WeatherView(arguments: settings.arguments as LocationArguments));
+        return MaterialPageRoute(builder: (_) => WeatherView(arguments: settings.arguments as WeatherViewArguments));
       default:
         return unDefinedRoute();
     }
