@@ -194,6 +194,7 @@ class _MapViewState extends State<MapView> {
                               hideLoading();
                               Navigator.pushNamed(context, Routes.weatherRoute,
                                   arguments: WeatherViewArguments(
+                                    username: userEmailAddress,
                                       location:
                                           destinationController.text.trim(),
                                       forecastDayModelList: state.stateList));

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/core/utils/constant/app_assets.dart';
 import 'package:weather_app/core/utils/constant/app_constants.dart';
@@ -89,20 +90,40 @@ class _WeatherViewState extends State<WeatherView> {
                     fit: BoxFit.cover)),
             child: Column(
               children: [
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(AppStrings.hello,
+                            style: AppTypography.kBold24
+                                .copyWith(color: AppColors.cSecondary)),
+                        Text(widget.arguments.username,
+                            style: AppTypography.kLight16
+                                .copyWith(color: AppColors.cSecondary)),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
                         child: Text(
                       _timeOfDay.format(context).toString(),
-                      style: AppTypography.kBold36,
+                      style: AppTypography.kBold24,
                     )),
                     SizedBox(
-                      height: AppConstants.heightBetweenElements,
+                      width: AppConstants.heightBetweenElements,
                     ),
                     Center(
                         child: Text(
                       DateFormat('EEEE | d MMM').format(_dateOfDay),
-                      style: AppTypography.kBold24
+                      style: AppTypography.kBold18
                           .copyWith(color: AppColors.cTitle),
                     ))
                   ],
@@ -155,7 +176,7 @@ class _WeatherViewState extends State<WeatherView> {
                 ),
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.9,
-                  height: MediaQuery.sizeOf(context).height * 0.4,
+                  height: MediaQuery.sizeOf(context).height * 0.39,
                   padding:
                       EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.h),
                   decoration: BoxDecoration(
@@ -179,7 +200,7 @@ class _WeatherViewState extends State<WeatherView> {
                             .copyWith(color: AppColors.cWhite),
                       ),
                       SizedBox(
-                        height: 40.h,
+                        height: 35.h,
                       ),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * 0.8,
@@ -237,65 +258,70 @@ class _WeatherViewState extends State<WeatherView> {
                 SizedBox(
                   height: AppConstants.heightBetweenElements,
                 ),
-                PrimaryButton(
-                    onTap: () async {
-                      // outlook is rainy
-                      if (forecastDayModelList[selectedIndex].day.dailyChanceOfRain >
-                          50) {
-                        prediction.add(1);
-                      } else {
-                        prediction.add(0);
-                      }
-                      // outlook is sunny
-                      if (forecastDayModelList[selectedIndex].day.condition.text == "Sunny") {
-                        prediction.add(1);
-                      } else {
-                        prediction.add(0);
-                      }
-                      // temperature is hot
-                      if (forecastDayModelList[selectedIndex].day.avgtempC >
-                          50) {
-                        prediction.add(1);
-                      } else {
-                        prediction.add(0);
-                      }
-                      // temperature is mild
-                      if (forecastDayModelList[selectedIndex].day.avgtempC >
-                          50) {
-                        prediction.add(0);
-                      } else {
-                        prediction.add(1);
-                      }
-                      // normal humidity
-                      if (forecastDayModelList[selectedIndex].day.avghumidity >
-                          50) {
-                        prediction.add(1);
-                      } else {
-                        prediction.add(0);
-                      }
-                      print(prediction);
-                    },
-                    text: AppStrings.prediction),
+                Row(
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                            width: 60.w,
+                            height: 60.h,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.3),
+                              borderRadius:
+                              BorderRadius.circular(AppConstants.radius),
+                            ),
+                            child: Icon(Icons.arrow_back,
+                                size: 30.w, color: AppColors.cWhite))),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    PrimaryButton(
+                        onTap: () async {
+                          // outlook is rainy
+                          if (forecastDayModelList[selectedIndex].day.dailyChanceOfRain >
+                              50) {
+                            prediction.add(1);
+                          } else {
+                            prediction.add(0);
+                          }
+                          // outlook is sunny
+                          if (forecastDayModelList[selectedIndex].day.condition.text == "Sunny") {
+                            prediction.add(1);
+                          } else {
+                            prediction.add(0);
+                          }
+                          // temperature is hot
+                          if (forecastDayModelList[selectedIndex].day.avgtempC >
+                              50) {
+                            prediction.add(1);
+                          } else {
+                            prediction.add(0);
+                          }
+                          // temperature is mild
+                          if (forecastDayModelList[selectedIndex].day.avgtempC >
+                              50) {
+                            prediction.add(0);
+                          } else {
+                            prediction.add(1);
+                          }
+                          // normal humidity
+                          if (forecastDayModelList[selectedIndex].day.avghumidity >
+                              50) {
+                            prediction.add(1);
+                          } else {
+                            prediction.add(0);
+                          }
+                          print(prediction);
+                        },
+                        width: MediaQuery.sizeOf(context).width - 120.w,
+                        text: AppStrings.prediction)
+                  ],
+                )
               ],
             ),
           ),
-          Positioned(
-              top: 20.h,
-              left: 20.w,
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                      width: 40.w,
-                      height: 40.h,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
-                        borderRadius:
-                            BorderRadius.circular(AppConstants.radius),
-                      ),
-                      child: Icon(Icons.arrow_back,
-                          size: 30.w, color: AppColors.cWhite)))),
           Positioned(
               top: 20.h,
               right: 20.w,
@@ -308,15 +334,27 @@ class _WeatherViewState extends State<WeatherView> {
                           BlocProvider.of<AuthBloc>(context).add(LogoutEvent());
                         },
                         child: Container(
-                            width: 40.w,
+                            width: 110.w,
                             height: 40.h,
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.3),
                               borderRadius:
                                   BorderRadius.circular(AppConstants.radius),
                             ),
-                            child: Icon(Icons.logout,
-                                size: 30.w, color: AppColors.cWhite)));
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  AppAssets.logout,
+                                  width: 30.w,
+                                  color: AppColors.cWhite,
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(AppStrings.logout,style: AppTypography.kLight16.copyWith(color: AppColors.cWhite),),
+                              ],
+                            )));
                   },
                   listener: (context, state) {
                     if (state.authState == RequestState.loading) {
