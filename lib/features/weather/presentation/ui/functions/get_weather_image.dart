@@ -1,5 +1,5 @@
 
-import '../utils/constant/app_assets.dart';
+import '../../../../../core/utils/constant/app_assets.dart';
 
 String getImage(String weatherText) {
   if (weatherText.contains("sun") || weatherText.contains("Sun")) {

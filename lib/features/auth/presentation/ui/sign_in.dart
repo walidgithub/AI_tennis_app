@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/utils/dialogs/error_dialog.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../../core/di/di.dart';
-import '../../../../core/functions/check_valid_email.dart';
+import 'functions/check_valid_email.dart';
 import '../../../../core/preferences/app_pref.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/constant/app_assets.dart';

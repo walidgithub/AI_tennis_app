@@ -8,8 +8,8 @@ import 'package:weather_app/core/utils/constant/app_constants.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
 import 'package:weather_app/features/weather/data/models/forecast_day_model.dart';
 import '../../../../core/di/di.dart';
-import '../../../../core/functions/get_weather_background_image.dart';
-import '../../../../core/functions/get_weather_image.dart';
+import 'functions/get_weather_background_image.dart';
+import 'functions/get_weather_image.dart';
 import '../../../../core/preferences/app_pref.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/router/arguments.dart';
@@ -42,6 +42,8 @@ class _WeatherViewState extends State<WeatherView> {
   double temperature = 0.0;
 
   List<ForecastDayModel> forecastDayModelList = [];
+
+  List prediction = [];
 
   @override
   void initState() {
@@ -235,7 +237,45 @@ class _WeatherViewState extends State<WeatherView> {
                 SizedBox(
                   height: AppConstants.heightBetweenElements,
                 ),
-                PrimaryButton(onTap: () async {}, text: AppStrings.prediction),
+                PrimaryButton(
+                    onTap: () async {
+                      // outlook is rainy
+                      if (forecastDayModelList[selectedIndex].day.dailyChanceOfRain >
+                          50) {
+                        prediction.add(1);
+                      } else {
+                        prediction.add(0);
+                      }
+                      // outlook is sunny
+                      if (forecastDayModelList[selectedIndex].day.condition.text == "Sunny") {
+                        prediction.add(1);
+                      } else {
+                        prediction.add(0);
+                      }
+                      // temperature is hot
+                      if (forecastDayModelList[selectedIndex].day.avgtempC >
+                          50) {
+                        prediction.add(1);
+                      } else {
+                        prediction.add(0);
+                      }
+                      // temperature is mild
+                      if (forecastDayModelList[selectedIndex].day.avgtempC >
+                          50) {
+                        prediction.add(0);
+                      } else {
+                        prediction.add(1);
+                      }
+                      // normal humidity
+                      if (forecastDayModelList[selectedIndex].day.avghumidity >
+                          50) {
+                        prediction.add(1);
+                      } else {
+                        prediction.add(0);
+                      }
+                      print(prediction);
+                    },
+                    text: AppStrings.prediction),
               ],
             ),
           ),
@@ -252,7 +292,7 @@ class _WeatherViewState extends State<WeatherView> {
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.3),
                         borderRadius:
-                        BorderRadius.circular(AppConstants.radius),
+                            BorderRadius.circular(AppConstants.radius),
                       ),
                       child: Icon(Icons.arrow_back,
                           size: 30.w, color: AppColors.cWhite)))),
@@ -265,8 +305,7 @@ class _WeatherViewState extends State<WeatherView> {
                   builder: (context, state) {
                     return GestureDetector(
                         onTap: () {
-                          BlocProvider.of<AuthBloc>(context)
-                              .add(LogoutEvent());
+                          BlocProvider.of<AuthBloc>(context).add(LogoutEvent());
                         },
                         child: Container(
                             width: 40.w,

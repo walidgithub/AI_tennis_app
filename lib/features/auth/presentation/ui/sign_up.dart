@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/di/di.dart';
-import '../../../../core/functions/check_valid_email.dart';
+import 'functions/check_valid_email.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/constant/app_assets.dart';
 import '../../../../core/utils/constant/app_constants.dart';
