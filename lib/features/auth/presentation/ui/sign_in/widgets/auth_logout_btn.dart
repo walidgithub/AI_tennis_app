@@ -7,8 +7,8 @@ import '../../../../../../core/utils/constant/app_typography.dart';
 import '../../../../../../core/utils/style/app_colors.dart';
 import '../../../../../../core/utils/ui_components/custom_text_button.dart';
 
-class LogoutBtn extends StatelessWidget {
-  const LogoutBtn({super.key});
+class AuthLogoutBtn extends StatelessWidget {
+  const AuthLogoutBtn({super.key});
 
   @override
   Widget build(BuildContext context) {

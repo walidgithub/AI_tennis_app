@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/utils/dialogs/error_dialog.dart';
 import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:weather_app/features/auth/presentation/ui/sign_in/widgets/logout_btn.dart';
+import 'package:weather_app/features/auth/presentation/ui/sign_in/widgets/auth_logout_btn.dart';
 import '../../../../../core/di/di.dart';
 import '../functions/check_valid_email.dart';
 import '../../../../../core/preferences/app_pref.dart';
@@ -129,7 +129,7 @@ class _SignInViewState extends State<SignInView> {
                                   },
                                   text: AppStrings.signIn),
                               SizedBox(height: 20.h),
-                              const LogoutBtn()
+                              const AuthLogoutBtn()
                             ],
                           ),
                         ),
