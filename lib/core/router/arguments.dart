@@ -1,15 +1,8 @@
-import '../../features/auth/domain/entities/user_model.dart';
+import 'package:weather_app/features/weather/data/models/forecast_day_model.dart';
 
-class UserModelArguments {
-  String email;
-  String phoneNumber;
-  String photoURL;
-  String displayName;
-
-  UserModelArguments({
-    required this.email,
-    required this.phoneNumber,
-    required this.photoURL,
-    required this.displayName,
-  });
+class WeatherViewArguments {
+  String location;
+  String username;
+  List<ForecastDayModel> forecastDayModelList;
+  WeatherViewArguments({required this.location, required this.username, required this.forecastDayModelList});
 }
