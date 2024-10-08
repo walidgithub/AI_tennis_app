@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/di/di.dart';
-import 'functions/check_valid_email.dart';
-import '../../../../core/router/app_router.dart';
-import '../../../../core/utils/constant/app_assets.dart';
-import '../../../../core/utils/constant/app_constants.dart';
-import '../../../../core/utils/constant/app_strings.dart';
-import '../../../../core/utils/constant/app_typography.dart';
-import '../../../../core/utils/dialogs/back_dialog.dart';
-import '../../../../core/utils/dialogs/error_dialog.dart';
-import '../../../../core/utils/enums/RequestState.dart';
-import '../../../../core/utils/style/app_colors.dart';
-import '../../../../core/utils/ui_components/custom_animation.dart';
-import '../../../../core/utils/ui_components/custom_text_button.dart';
-import '../../../../core/utils/ui_components/loading_dialog.dart';
-import '../../../../core/utils/ui_components/primary_button.dart';
-import '../../domain/entities/credential_model.dart';
-import '../bloc/auth_bloc.dart';
-import 'components/auth_field.dart';
+import 'package:weather_app/features/auth/presentation/ui/sign_up/widgets/login_btn.dart';
+import '../../../../../core/di/di.dart';
+import '../functions/check_valid_email.dart';
+import '../../../../../core/router/app_router.dart';
+import '../../../../../core/utils/constant/app_assets.dart';
+import '../../../../../core/utils/constant/app_constants.dart';
+import '../../../../../core/utils/constant/app_strings.dart';
+import '../../../../../core/utils/constant/app_typography.dart';
+import '../../../../../core/utils/dialogs/back_dialog.dart';
+import '../../../../../core/utils/dialogs/error_dialog.dart';
+import '../../../../../core/utils/enums/RequestState.dart';
+import '../../../../../core/utils/style/app_colors.dart';
+import '../../../../../core/utils/ui_components/custom_animation.dart';
+import '../../../../../core/utils/ui_components/custom_text_button.dart';
+import '../../../../../core/utils/ui_components/loading_dialog.dart';
+import '../../../../../core/utils/ui_components/primary_button.dart';
+import '../../../domain/entities/credential_model.dart';
+import '../../bloc/auth_bloc.dart';
+import '../components/auth_field.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -136,24 +137,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 },
                                 text: AppStrings.signUp),
                             SizedBox(height: 30.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(AppStrings.alreadyUser,
-                                    style: AppTypography.kLight14.copyWith(
-                                      color: AppColors.cPrimary,
-                                    )),
-                                SizedBox(
-                                  width: AppConstants.heightBetweenElements,
-                                ),
-                                CustomTextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushReplacementNamed(Routes.signInRoute);
-                                  },
-                                  text: AppStrings.signIn,
-                                )
-                              ],
-                            )
+                            const LoginInBtn()
                           ],
                         ),
                       ),
