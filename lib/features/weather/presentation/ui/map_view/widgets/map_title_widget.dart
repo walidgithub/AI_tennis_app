@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/utils/constant/app_strings.dart';
-import '../../../../../../core/utils/constant/app_typography.dart';
-import '../../../../../../core/utils/style/app_colors.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 
 class MapTitleWidget extends StatelessWidget {
   String userEmailAddress;

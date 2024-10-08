@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:weather_app/core/imports/features_imports.dart';
 import '../../../../../../core/di/di.dart';
-import '../../../../../../core/router/app_router.dart';
-import '../../../../../../core/router/arguments.dart';
-import '../../../../../../core/utils/constant/app_constants.dart';
-import '../../../../../../core/utils/constant/app_strings.dart';
 import '../../../../../../core/utils/dialogs/error_dialog.dart';
 import '../../../../../../core/utils/enums/RequestState.dart';
 import '../../../../../../core/utils/ui_components/loading_dialog.dart';

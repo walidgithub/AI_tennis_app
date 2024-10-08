@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-
-import '../../../../../../core/utils/constant/app_constants.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 import '../../../../data/models/forecast_day_model.dart';
 import '../functions/get_weather_image.dart';
 import 'days_group_view.dart';

@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/router/app_router.dart';
-import '../../../../../../core/utils/constant/app_constants.dart';
-import '../../../../../../core/utils/constant/app_strings.dart';
-import '../../../../../../core/utils/constant/app_typography.dart';
-import '../../../../../../core/utils/style/app_colors.dart';
-import '../../../../../../core/utils/ui_components/custom_text_button.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 
 class AuthLogoutBtn extends StatelessWidget {
   const AuthLogoutBtn({super.key});

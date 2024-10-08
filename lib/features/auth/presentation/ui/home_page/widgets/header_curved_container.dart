@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../../core/utils/style/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 
 class HeaderCurvedContainer extends CustomPainter {
   BuildContext context;

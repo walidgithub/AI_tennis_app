@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../../../core/di/di.dart';
 import '../../../../../../core/preferences/app_pref.dart';
-import '../../../../../../core/router/app_router.dart';
-import '../../../../../../core/utils/constant/app_assets.dart';
-import '../../../../../../core/utils/constant/app_constants.dart';
-import '../../../../../../core/utils/constant/app_strings.dart';
-import '../../../../../../core/utils/constant/app_typography.dart';
 import '../../../../../../core/utils/dialogs/error_dialog.dart';
 import '../../../../../../core/utils/enums/RequestState.dart';
-import '../../../../../../core/utils/style/app_colors.dart';
 import '../../../../../../core/utils/ui_components/loading_dialog.dart';
 import '../../../../../auth/presentation/bloc/auth_bloc.dart';
 

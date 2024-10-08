@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../../core/router/app_router.dart';
-import '../../../../../../core/utils/constant/app_strings.dart';
-import '../../../../../../core/utils/style/app_colors.dart';
-import '../../../../../../core/utils/ui_components/custom_animation.dart';
+import 'package:flutter/material.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 import 'home_btn.dart';
 
-class BtnContainer extends StatelessWidget {
-  const BtnContainer({super.key});
+class HomeBtnContainer extends StatelessWidget {
+  const HomeBtnContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
