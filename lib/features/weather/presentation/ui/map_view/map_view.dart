@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather_app/core/utils/constant/app_constants.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 import 'package:weather_app/features/weather/presentation/ui/map_view/widgets/destination_txt_field.dart';
 import 'package:weather_app/features/weather/presentation/ui/map_view/widgets/get_weather_btn.dart';
 import 'package:weather_app/features/weather/presentation/ui/map_view/widgets/location_picker.dart';

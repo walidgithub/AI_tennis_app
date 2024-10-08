@@ -1,14 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather_app/core/utils/style/app_colors.dart';
-import 'package:weather_app/features/auth/presentation/ui/home_page/widgets/btn_container.dart';
+import 'package:weather_app/features/auth/presentation/ui/home_page/widgets/home_btn_container.dart';
 import '../../../../../core/di/di.dart';
 import '../../../../../core/preferences/app_pref.dart';
-import '../../../../../core/router/app_router.dart';
-import '../../../../../core/utils/constant/app_assets.dart';
-import '../../../../../core/utils/constant/app_strings.dart';
-import '../../../../../core/utils/constant/app_typography.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 import '../../../../../core/utils/dialogs/back_dialog.dart';
 import 'widgets/header_curved_container.dart';
 
@@ -96,7 +91,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Positioned(
                   top: MediaQuery.of(context).size.height * 0.60.h,
-                  child: const BtnContainer()),
+                  child: const HomeBtnContainer()),
             ],
           ),
         ),

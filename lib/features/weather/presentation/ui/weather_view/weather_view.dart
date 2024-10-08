@@ -1,19 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:weather_app/core/utils/constant/app_constants.dart';
-import 'package:weather_app/core/utils/style/app_colors.dart';
+import 'package:weather_app/core/imports/features_imports.dart';
 import 'package:weather_app/features/weather/data/models/forecast_day_model.dart';
+import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/selected_day.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/weather_back_btn.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/daily_time_and_date.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/days_weather.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/predict_btn.dart';
-import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/selected_day_weather.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/weather_title_widget.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/weather_logout_btn.dart';
-import '../../../../../core/router/arguments.dart';
-import '../../../../../core/utils/constant/app_typography.dart';
 import 'functions/get_weather_background_image.dart';
 import 'functions/get_weather_image.dart';
 
@@ -108,43 +103,7 @@ class _WeatherViewState extends State<WeatherView> {
                 SizedBox(
                   height: AppConstants.moreHeightBetweenElements,
                 ),
-                Container(
-                  width: MediaQuery.sizeOf(context).width * 0.9,
-                  height: MediaQuery.sizeOf(context).height * 0.39,
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.h),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(AppConstants.radius),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.arguments.location,
-                        style: AppTypography.kBold24
-                            .copyWith(color: AppColors.cWhite),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        dayName,
-                        style: AppTypography.kBold14
-                            .copyWith(color: AppColors.cWhite),
-                      ),
-                      SizedBox(
-                        height: 35.h,
-                      ),
-                      SelectedDayWeather(
-                        selectedIndex: selectedIndex,
-                        temperature: temperature,
-                        image: image,
-                        forecastDayModelList: forecastDayModelList,
-                      )
-                    ],
-                  ),
-                ),
+                SelectedDay(dayName: dayName,forecastDayModelList: forecastDayModelList, image: image,temperature: temperature,selectedIndex: selectedIndex,location: widget.arguments.location,),
                 SizedBox(
                   height: AppConstants.heightBetweenElements,
                 ),
