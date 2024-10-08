@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/utils/constant/app_constants.dart';
 import '../../../../../../core/utils/style/app_colors.dart';
 
-class BackBtn extends StatelessWidget {
-  const BackBtn({super.key});
+class WeatherBackBtn extends StatelessWidget {
+  const WeatherBackBtn({super.key});
 
   @override
   Widget build(BuildContext context) {

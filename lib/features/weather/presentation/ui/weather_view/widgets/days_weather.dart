@@ -10,11 +10,9 @@ import 'days_group_view.dart';
 class DaysWeather extends StatefulWidget {
   List<DateTime>? nextThreeDays;
   int selectedIndex;
-  String dayName;
-  String image;
-  double temperature;
   List<ForecastDayModel> forecastDayModelList;
-  DaysWeather({super.key, required this.nextThreeDays, required this.selectedIndex, required this.dayName, required this.temperature, required this.image, required this.forecastDayModelList});
+  Function getDailyWeather;
+  DaysWeather({super.key, required this.nextThreeDays, required this.selectedIndex, required this.forecastDayModelList, required this.getDailyWeather});
 
   @override
   State<DaysWeather> createState() => _DaysWeatherState();
@@ -53,12 +51,7 @@ class _DaysWeatherState extends State<DaysWeather> {
                   getWeather: (double selectedTemperature,
                       String selectedImage,
                       String selectedDayName) {
-                    setState(() {
-                      widget.dayName = selectedDayName;
-                      widget.image = selectedImage;
-                      widget.temperature = selectedTemperature;
-                      widget.selectedIndex = index;
-                    });
+                    widget.getDailyWeather(selectedTemperature, selectedImage, selectedDayName, index);
                   });
             }),
       ),

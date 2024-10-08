@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_app/core/utils/constant/app_constants.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
 import 'package:weather_app/features/weather/data/models/forecast_day_model.dart';
+import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/weather_back_btn.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/daily_time_and_date.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/days_weather.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/predict_btn.dart';
@@ -90,12 +91,20 @@ class _WeatherViewState extends State<WeatherView> {
                   height: AppConstants.moreHeightBetweenElements,
                 ),
                 DaysWeather(
-                    dayName: dayName,
                     forecastDayModelList: forecastDayModelList,
-                    image: image,
                     nextThreeDays: nextThreeDays,
                     selectedIndex: selectedIndex,
-                    temperature: temperature),
+                  getDailyWeather: (double selectedTemperature,
+                      String selectedImage,
+                      String selectedDayName, int index) {
+                    setState(() {
+                      dayName = selectedDayName;
+                      image = selectedImage;
+                      temperature = selectedTemperature;
+                      selectedIndex = index;
+                    });
+                  },
+                ),
                 SizedBox(
                   height: AppConstants.moreHeightBetweenElements,
                 ),
@@ -141,7 +150,7 @@ class _WeatherViewState extends State<WeatherView> {
                 ),
                 Row(
                   children: [
-                    const BackButton(),
+                    const WeatherBackBtn(),
                     SizedBox(
                       width: 10.w,
                     ),
