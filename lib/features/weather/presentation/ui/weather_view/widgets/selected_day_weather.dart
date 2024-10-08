@@ -7,13 +7,18 @@ import '../../../../../../core/utils/constant/app_typography.dart';
 import '../../../../../../core/utils/style/app_colors.dart';
 import '../../../../data/models/forecast_day_model.dart';
 
-class SelectedDayWeather extends StatelessWidget {
+class SelectedDayWeather extends StatefulWidget {
   List<ForecastDayModel> forecastDayModelList;
   int selectedIndex;
   String image;
   double temperature;
   SelectedDayWeather({super.key, required this.forecastDayModelList, required this.selectedIndex, required this.temperature, required this.image});
 
+  @override
+  State<SelectedDayWeather> createState() => _SelectedDayWeatherState();
+}
+
+class _SelectedDayWeatherState extends State<SelectedDayWeather> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,7 +31,7 @@ class SelectedDayWeather extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${temperature.toString()}° C',
+                '${widget.temperature.toString()}° C',
                 style: AppTypography.kBold36
                     .copyWith(color: AppColors.cWhite),
               ),
@@ -34,7 +39,7 @@ class SelectedDayWeather extends StatelessWidget {
                 height: AppConstants.heightBetweenElements,
               ),
               Text(
-                forecastDayModelList[selectedIndex]
+                widget.forecastDayModelList[widget.selectedIndex]
                     .day
                     .condition
                     .text,
@@ -45,7 +50,7 @@ class SelectedDayWeather extends StatelessWidget {
                 height: AppConstants.heightBetweenElements,
               ),
               Text(
-                '${AppStrings.chanceOfRains} ${forecastDayModelList[selectedIndex].day.dailyChanceOfRain.toString()}%',
+                '${AppStrings.chanceOfRains} ${widget.forecastDayModelList[widget.selectedIndex].day.dailyChanceOfRain.toString()}%',
                 style: AppTypography.kBold14
                     .copyWith(color: AppColors.cWhite),
               ),
@@ -53,14 +58,14 @@ class SelectedDayWeather extends StatelessWidget {
                 height: AppConstants.heightBetweenElements,
               ),
               Text(
-                '${AppStrings.humidity} ${forecastDayModelList[selectedIndex].day.avghumidity.toString()}%',
+                '${AppStrings.humidity} ${widget.forecastDayModelList[widget.selectedIndex].day.avghumidity.toString()}%',
                 style: AppTypography.kBold14
                     .copyWith(color: AppColors.cWhite),
               ),
             ],
           ),
           Image.asset(
-            image,
+            widget.image,
             width: 100.h,
           ),
         ],
