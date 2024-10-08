@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/router/arguments.dart';
-import 'package:weather_app/features/auth/presentation/ui/home_page.dart';
-import 'package:weather_app/features/auth/presentation/ui/sign_in.dart';
-import 'package:weather_app/features/auth/presentation/ui/sign_up.dart';
+import 'package:weather_app/features/auth/presentation/ui/home_page/home_page.dart';
+import 'package:weather_app/features/auth/presentation/ui/sign_in/sign_in.dart';
+import 'package:weather_app/features/auth/presentation/ui/sign_up/sign_up.dart';
 import '../../features/weather/presentation/ui/map_view.dart';
 import '../../features/weather/presentation/ui/weather_view.dart';
 
