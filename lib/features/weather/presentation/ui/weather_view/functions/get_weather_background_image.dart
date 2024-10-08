@@ -1,6 +1,5 @@
 
-import '../../../../../core/utils/constant/app_assets.dart';
-
+import '../../../../../../core/utils/constant/app_assets.dart';
 String getBackground(String weatherText) {
   if (weatherText.contains("sun") || weatherText.contains("Sun")) {
     return AppAssets.sunny;

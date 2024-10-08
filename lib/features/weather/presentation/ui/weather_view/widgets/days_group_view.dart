@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/utils/style/app_colors.dart';
-import '../../../../../core/utils/constant/app_typography.dart';
+import '../../../../../../core/utils/constant/app_typography.dart';
 
 class DaysGroupView extends StatefulWidget {
   String dayName;
