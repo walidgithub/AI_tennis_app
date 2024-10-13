@@ -3,6 +3,7 @@ import 'package:weather_app/core/router/arguments.dart';
 import 'package:weather_app/features/auth/presentation/ui/home_page/home_page.dart';
 import 'package:weather_app/features/auth/presentation/ui/sign_in/sign_in.dart';
 import 'package:weather_app/features/auth/presentation/ui/sign_up/sign_up.dart';
+import 'package:weather_app/features/weather/presentation/ui/test_view.dart';
 import '../../features/weather/presentation/ui/map_view/map_view.dart';
 import '../../features/weather/presentation/ui/weather_view/weather_view.dart';
 
@@ -12,6 +13,7 @@ class Routes {
   static const String singUpRoute = "/signUp";
   static const String mapRoute = "/map";
   static const String weatherRoute = "/weather";
+  static const String testRoute = "/test";
 }
 
 class RouteGenerator {
@@ -21,6 +23,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const HomePage());
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) => const SignInView());
+      case Routes.testRoute:
+        return MaterialPageRoute(builder: (_) => const TestView());
       case Routes.singUpRoute:
         return MaterialPageRoute(builder: (_) => const SignUpView());
       case Routes.mapRoute:
