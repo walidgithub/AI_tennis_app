@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:weather_app/core/imports/features_imports.dart';
 import 'package:weather_app/features/weather/data/mappers/mappers.dart';
 import '../../../../../../core/di/di.dart';
@@ -39,7 +40,20 @@ class PredictBtn extends StatelessWidget {
         builder: (context, state) {
           return PrimaryButton(
               onTap: () async {
+
                 // onGetPrediction(context, [1]);
+
+                // try {
+                //   /// Initialize Ip Address
+                //   var ipAddress = IpAddress(type: RequestType.json);
+                //
+                //   /// Get the IpAddress based on requestType.
+                //   dynamic data = await ipAddress.getIpAddress();
+                //   print(data.toString());
+                // } on IpAddressException catch (exception) {
+                //   /// Handle the exception.
+                //   print(exception.message);
+                // }
 
                 forecastDayModelList[selectedIndex].getFeaturesValues();
                 BlocProvider.of<WeatherBloc>(context).add(
