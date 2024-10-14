@@ -5,6 +5,7 @@ import '../../../../core/network/api_constants.dart';
 import '../../../../core/network/dio_manager.dart';
 import '../../domain/requests/location_request.dart';
 import '../../domain/requests/prediction_request.dart';
+import '../../presentation/ui/weather_view/functions/get_device_ip_address.dart';
 
 abstract class BaseDataSource {
   Future<List<ForecastDayModel>> getWeather(LocationRequest locationRequest);
@@ -34,14 +35,11 @@ class WeatherDataSource extends BaseDataSource {
   @override
   Future<List<int>> getPrediction(PredictionRequest predictionRequest) async {
     try {
-    final prediction = await _dio.post(ApiConstants.aiUrl,
-          body: predictionRequest.toJson());
-    print('predictionnnnnnnn');
-    print(prediction);
-    return [0];
+    var ipAddress = await gettingIP();
+    // final prediction = await _dio.post("http://$ipAddress:5001/predict",
+    //       body: predictionRequest.toJson());
+    return [1];
     } catch (e) {
-      print("errorrrrrrrr");
-      print(e);
       throw e.toString();
     }
   }
