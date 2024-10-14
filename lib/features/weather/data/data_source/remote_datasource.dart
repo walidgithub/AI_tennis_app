@@ -36,6 +36,7 @@ class WeatherDataSource extends BaseDataSource {
   Future<List<int>> getPrediction(PredictionRequest predictionRequest) async {
     try {
     var ipAddress = await gettingIP();
+
     // final prediction = await _dio.post("http://$ipAddress:5001/predict",
     //       body: predictionRequest.toJson());
     return [1];
