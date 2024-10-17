@@ -6,6 +6,7 @@ import 'package:weather_app/features/weather/domain/requests/prediction_request.
 import 'package:weather_app/features/weather/domain/usecases/get_prediction_usecase.dart';
 import '../../../../core/utils/enums/RequestState.dart';
 import '../../data/models/forecast_day_model.dart';
+import '../../data/models/prediction_model.dart';
 import '../../domain/usecases/get_weather_usecase.dart';
 part 'weather_event.dart';
 part 'weather_state.dart';
@@ -40,13 +41,13 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       GetPredictionEvent event, Emitter<WeatherState> emit) async {
     emit(state.copyWith(
         weatherState: RequestState.loading,
-        predictionResult: [],
+        predictionResult: const PredictionModel(prediction: [0]),
         weatherMessage: ""));
     final result = await getPredictionUseCase(event.predictionRequest);
     result.fold(
         (l) => emit(state.copyWith(
             weatherState: RequestState.error,
-            predictionResult: [],
+            predictionResult: const PredictionModel(prediction: [0]),
             weatherMessage: l.message)),
         (r) => emit(state.copyWith(
               predictionResult: r,

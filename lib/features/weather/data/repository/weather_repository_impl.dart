@@ -7,6 +7,7 @@ import '../../../../core/network/network_info.dart';
 import '../../domain/repository/weather_repo.dart';
 import '../../domain/requests/location_request.dart';
 import '../../domain/requests/prediction_request.dart';
+import '../models/prediction_model.dart';
 
 class WeatherRepositoryImpl extends WeatherRepository {
   final WeatherDataSource _weatherDataSource;
@@ -33,7 +34,7 @@ class WeatherRepositoryImpl extends WeatherRepository {
   }
 
   @override
-  Future<Either<Failure, List<int>>> getPrediction(PredictionRequest predictionRequest) async {
+  Future<Either<Failure, PredictionModel>> getPrediction(PredictionRequest predictionRequest) async {
     try {
       if (await _networkInfo.isConnected) {
         final result = await _weatherDataSource

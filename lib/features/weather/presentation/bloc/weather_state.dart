@@ -3,20 +3,20 @@ part of 'weather_bloc.dart';
 class WeatherState extends Equatable {
   final RequestState weatherState;
   final List<ForecastDayModel> stateList;
-  final List<int> predictionResult;
+  final PredictionModel predictionResult;
   final String weatherMessage;
 
   const WeatherState({
     this.weatherState = RequestState.loading,
     this.stateList = const [],
-    this.predictionResult = const [],
+    this.predictionResult = const PredictionModel(prediction: [0]),
     this.weatherMessage = '',
   });
 
   WeatherState copyWith({
     RequestState? weatherState,
     List<ForecastDayModel>? stateList,
-    List<int>? predictionResult,
+    PredictionModel? predictionResult,
     String? weatherMessage,
   }) {
     return WeatherState(
