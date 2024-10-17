@@ -9,6 +9,7 @@ import 'package:weather_app/features/weather/presentation/ui/weather_view/widget
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/predict_btn.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/weather_title_widget.dart';
 import 'package:weather_app/features/weather/presentation/ui/weather_view/widgets/weather_logout_btn.dart';
+import '../../../../../core/network/api_constants.dart';
 import 'functions/get_weather_background_image.dart';
 import 'functions/get_weather_image.dart';
 
@@ -21,7 +22,6 @@ class WeatherView extends StatefulWidget {
 }
 
 class _WeatherViewState extends State<WeatherView> {
-
   TimeOfDay _timeOfDay = TimeOfDay.now();
   DateTime _dateOfDay = DateTime.now();
   DateTime currentDate = DateTime.now();
@@ -31,13 +31,12 @@ class _WeatherViewState extends State<WeatherView> {
   String image = "";
   double temperature = 0.0;
   List<ForecastDayModel> forecastDayModelList = [];
-  List prediction = [];
 
   @override
   void initState() {
     super.initState();
     _getTimeAndDate();
-    nextThreeDays = List.generate(3, (index) {
+    nextThreeDays = List.generate(ApiConstants.daysCount - 1, (index) {
       return currentDate.add(Duration(days: index + 1));
     });
     nextThreeDays!.add(currentDate);
@@ -115,8 +114,7 @@ class _WeatherViewState extends State<WeatherView> {
                     ),
                     PredictBtn(
                       selectedIndex: selectedIndex,
-                      forecastDayModelList: forecastDayModelList,
-                      prediction: prediction,
+                      forecastDayModelList: forecastDayModelList
                     )
                   ],
                 )

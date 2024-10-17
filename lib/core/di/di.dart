@@ -7,6 +7,7 @@ import 'package:weather_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:weather_app/features/weather/data/data_source/remote_datasource.dart';
 import 'package:weather_app/features/weather/data/repository/weather_repository_impl.dart';
 import 'package:weather_app/features/weather/domain/repository/weather_repo.dart';
+import 'package:weather_app/features/weather/domain/usecases/get_prediction_usecase.dart';
 import 'package:weather_app/features/weather/domain/usecases/get_weather_usecase.dart';
 import '../../core/preferences/app_pref.dart';
 import '../../features/auth/data/data_source/firebase_data_source/auth_datasource.dart';
@@ -49,9 +50,10 @@ class ServiceLocator {
     sl.registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(sl()));
 
     sl.registerLazySingleton<GetWeatherUseCase>(() => GetWeatherUseCase(sl()));
+    sl.registerLazySingleton<GetPredictionUseCase>(() => GetPredictionUseCase(sl()));
 
     // Bloc
     sl.registerFactory(() => AuthBloc(sl(), sl(), sl()));
-    sl.registerFactory(() => WeatherBloc(sl()));
+    sl.registerFactory(() => WeatherBloc(sl(), sl()));
   }
 }
