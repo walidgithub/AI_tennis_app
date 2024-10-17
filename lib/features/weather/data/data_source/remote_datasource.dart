@@ -1,15 +1,14 @@
 import 'package:weather_app/features/weather/data/models/forecast_day_model.dart';
-
 import '../../../../core/error/error_handler.dart';
 import '../../../../core/network/api_constants.dart';
 import '../../../../core/network/dio_manager.dart';
 import '../../domain/requests/location_request.dart';
 import '../../domain/requests/prediction_request.dart';
-import '../../presentation/ui/weather_view/functions/get_device_ip_address.dart';
+import '../models/prediction_model.dart';
 
 abstract class BaseDataSource {
   Future<List<ForecastDayModel>> getWeather(LocationRequest locationRequest);
-  Future<List<int>> getPrediction(PredictionRequest predictionRequest);
+  Future<PredictionModel> getPrediction(PredictionRequest predictionRequest);
 }
 
 class WeatherDataSource extends BaseDataSource {
@@ -33,15 +32,14 @@ class WeatherDataSource extends BaseDataSource {
   }
 
   @override
-  Future<List<int>> getPrediction(PredictionRequest predictionRequest) async {
+  Future<PredictionModel> getPrediction(PredictionRequest predictionRequest) async {
     try {
-    var ipAddress = await gettingIP();
-
-    // final prediction = await _dio.post("http://$ipAddress:5001/predict",
-    //       body: predictionRequest.toJson());
-    return [1];
+    final prediction = await _dio.post("http://192.168.90.102:5001/predict",
+          body: predictionRequest.toJson());
+    PredictionModel predictRes = prediction.data["prediction"];
+    return predictRes;
     } catch (e) {
-      throw e.toString();
+      throw ErrorHandler.handle(e).failure;
     }
   }
 }

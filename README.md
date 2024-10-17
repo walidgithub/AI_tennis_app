@@ -10,6 +10,9 @@
 #### 2- Defining location and getting weather data
 [![Watch the video](https://img.youtube.com/vi/jv2Igw4Jp8I/hqdefault.jpg)](https://www.youtube.com/embed/jv2Igw4Jp8I)
 
+#### 3- Full app flow and finally predicting if I can go or not
+[![Watch the video](https://img.youtube.com/vi/8qOmHmJ7nXs/hqdefault.jpg)](https://www.youtube.com/embed/8qOmHmJ7nXs)
+
 ## Getting Started
 
 1. **Login**: If you already have an account, log in. If not, sign up to create a new account.
