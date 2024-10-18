@@ -1,55 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/imports/features_imports.dart';
+import 'package:weather_app/features/weather/data/mappers/mappers.dart';
+import '../../../../../../core/di/di.dart';
+import '../../../../../../core/utils/dialogs/error_dialog.dart';
+import '../../../../../../core/utils/dialogs/prediction_dialog.dart';
+import '../../../../../../core/utils/enums/RequestState.dart';
+import '../../../../../../core/utils/ui_components/loading_dialog.dart';
 import '../../../../../../core/utils/ui_components/primary_button.dart';
 import '../../../../data/models/forecast_day_model.dart';
+import '../../../bloc/weather_bloc.dart';
 
 class PredictBtn extends StatelessWidget {
   List<ForecastDayModel> forecastDayModelList;
   int selectedIndex;
-  List prediction;
-  PredictBtn({super.key, required this.forecastDayModelList, required this.selectedIndex, required this.prediction});
+  PredictBtn({super.key, required this.forecastDayModelList, required this.selectedIndex});
 
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
-        onTap: () async {
-          // outlook is rainy
-          if (forecastDayModelList[selectedIndex].day.dailyChanceOfRain >
-              50) {
-            prediction.add(1);
-          } else {
-            prediction.add(0);
-          }
-          // outlook is sunny
-          if (forecastDayModelList[selectedIndex].day.condition.text == "Sunny") {
-            prediction.add(1);
-          } else {
-            prediction.add(0);
-          }
-          // temperature is hot
-          if (forecastDayModelList[selectedIndex].day.avgtempC >
-              50) {
-            prediction.add(1);
-          } else {
-            prediction.add(0);
-          }
-          // temperature is mild
-          if (forecastDayModelList[selectedIndex].day.avgtempC >
-              50) {
-            prediction.add(0);
-          } else {
-            prediction.add(1);
-          }
-          // normal humidity
-          if (forecastDayModelList[selectedIndex].day.avghumidity >
-              50) {
-            prediction.add(1);
-          } else {
-            prediction.add(0);
-          }
-          print(prediction);
-        },
-        width: MediaQuery.sizeOf(context).width - 120.w,
-        text: AppStrings.prediction);
+    return BlocProvider(
+      create: (context) => sl<WeatherBloc>(),
+      child: BlocConsumer<WeatherBloc, WeatherState>(
+          listener: (context, state) {
+            if (state.weatherState == RequestState.loading) {
+              showLoading();
+            } else if (state.weatherState ==
+                RequestState.done) {
+              hideLoading();
+              onGetPrediction(context, state.predictionResult);
+            } else if (state.weatherState ==
+                RequestState.error) {
+              hideLoading();
+              onError(context, state.weatherMessage);
+            }
+          },
+        builder: (context, state) {
+          return PrimaryButton(
+              onTap: () async {
+                BlocProvider.of<WeatherBloc>(context).add(
+                    GetPredictionEvent(forecastDayModelList[selectedIndex].getFeaturesValues()));
+              },
+              width: MediaQuery.sizeOf(context).width - 120.w,
+              text: AppStrings.prediction);
+        }
+      ),
+    );
   }
 }
+

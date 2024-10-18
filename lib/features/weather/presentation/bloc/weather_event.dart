@@ -10,7 +10,15 @@ abstract class WeatherEvent extends Equatable {
 class GetWeatherEvent extends WeatherEvent{
   final LocationRequest locationRequest;
 
-  GetWeatherEvent(this.locationRequest);
+  const GetWeatherEvent(this.locationRequest);
 
   List<Object> get props => [locationRequest];
+}
+
+class GetPredictionEvent extends WeatherEvent{
+  final PredictionRequest predictionRequest;
+
+  const GetPredictionEvent(this.predictionRequest);
+
+  List<Object> get props => [predictionRequest];
 }

@@ -6,6 +6,9 @@ class AppStrings {
   static const String no = 'No';
   static const String warning = 'Warning';
   static const String error = 'Error';
+  static const String youCanGo = 'You can go!';
+  static const String predictionResult = 'Prediction Result';
+  static const String youCanNotGo = 'You can not go!';
   static const String closeApp = 'Do you want to close the app?';
 
   static const String signIn = "Sign In";

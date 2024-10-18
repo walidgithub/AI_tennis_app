@@ -3,9 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const String userLoggedIn = "userLoggedIn";
 const String userEmail = "userEmail";
-const String userPhone = "userPhone";
 const String userName = "userName";
-const String userPhotoUrl = "photoUrl";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -41,24 +39,6 @@ class AppPreferences {
   }
 
   String? getUserName(String key) {
-    return _sharedPreferences.getString(key);
-  }
-
-  // phone
-  Future<bool> setUserPhone(String key, String userPhone) async {
-    return await _sharedPreferences.setString(key, userPhone);
-  }
-
-  String? getUserPhone(String key) {
-    return _sharedPreferences.getString(key);
-  }
-
-  // photoUrl
-  Future<bool> setUserPhotoUrl(String key, String userPhotoUrl) async {
-    return await _sharedPreferences.setString(key, userPhotoUrl);
-  }
-
-  String? getUserPhotoUrl(String key) {
     return _sharedPreferences.getString(key);
   }
 }
